@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control_SADMIN - Master Hub</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="login-screen" class="screen active">
+        <div class="glass-panel login-box">
+            <div class="logo-area">
+                <div class="pulse-ring"></div>
+                <img src="control_sadmin.png" alt="Control_SADMIN Logo" class="main-logo" style="object-fit:cover; border: 1px solid #000; background: transparent;">
+            </div>
+            <h2>Control_SADMIN</h2>
+            <p class="subtitle">Single Sign-On Master Hub</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="email" id="email" required placeholder=" " value="admin@controlsadmin.com">
+                    <label for="email">Admin Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" required placeholder=" " value="password">
+                    <label for="password">Master Password</label>
+                </div>
+                <button type="submit" class="glow-button">Acessar HUB Central</button>
+                <div id="login-error" class="error-msg"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" class="screen">
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <h2>Control_SADMIN</h2>
+                <div class="admin-badge">
+                    <span id="admin-name">Super Admin</span>
+                    <button id="logout-btn" class="icon-btn" title="Sair">⏏</button>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="#">Dashboard Central</a></li>
+                <li><a href="#">Gerenciar Acessos</a></li>
+                <li><a href="#">Logs de Segurança</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            <header class="topbar">
+                <div class="overview">
+                    <h1>Visão Geral dos Sistemas SaaS</h1>
+                    <p>Monitore e acesse todos os seus painéis de administração em um só lugar.</p>
+                </div>
+                <div class="global-stats">
+                    <div class="stat-pill">
+                        <span class="pulse-dot green"></span> Sistemas Online: <span id="online-count">0</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="cards-grid" id="systems-grid">
+                <!-- Cards serão injetados via JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para Loading do SSO -->
+    <div id="sso-loading" class="sso-overlay">
+        <div class="spinner"></div>
+        <p>Gerando token seguro e conectando ao SaaS...</p>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
