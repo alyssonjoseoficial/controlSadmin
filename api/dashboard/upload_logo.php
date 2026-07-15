@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $uploadDir = '../../assets/images/logos/';
+        $uploadDir = __DIR__ . '/../../assets/images/logos/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
