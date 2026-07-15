@@ -11,14 +11,14 @@ try {
     // Reset auto increment (dependendo do banco pode ignorar se falhar)
     try { $db->exec("ALTER TABLE saas_systems AUTO_INCREMENT = 1"); } catch(Exception $e) {}
 
-    // 2. Novos Sistemas Oficiais
+    // 2. Novos Sistemas Oficiais (Produção)
     $sistemas = [
-        ['name' => 'Educa SaaS', 'slug' => 'educa_saas', 'url' => 'https://educasaas.com.br', 'logo_url' => 'https://via.placeholder.com/150/2c3e50/fff.png?text=Educa'],
-        ['name' => 'Mesaki', 'slug' => 'restflux', 'url' => 'https://mesaki.com.br', 'logo_url' => 'https://via.placeholder.com/150/e74c3c/fff.png?text=Mesaki'],
-        ['name' => 'Gestor Gym', 'slug' => 'gestorgym', 'url' => 'https://gestorgym.com.br', 'logo_url' => 'https://via.placeholder.com/150/f39c12/fff.png?text=Gym'],
-        ['name' => 'CacheZum', 'slug' => 'giromax', 'url' => 'https://cachezum.com.br', 'logo_url' => 'https://via.placeholder.com/150/8e44ad/fff.png?text=CacheZum'],
-        ['name' => 'Gestor Vital', 'slug' => 'gestor_vital_new', 'url' => 'https://gestorvital.com.br', 'logo_url' => 'https://via.placeholder.com/150/16a085/fff.png?text=Vital'],
-        ['name' => 'Vepix', 'slug' => 'projeto_loja', 'url' => 'https://vepix.com.br', 'logo_url' => 'https://via.placeholder.com/150/2980b9/fff.png?text=Vepix']
+        ['name' => 'Educa SaaS', 'slug' => 'educa_saas', 'url' => 'https://educasaas.com.br/public/superadmin/sso_login.php', 'logo_url' => 'https://via.placeholder.com/150/2c3e50/fff.png?text=Educa'],
+        ['name' => 'Mesaki', 'slug' => 'restflux', 'url' => 'https://mesaki.com.br/#/sso', 'logo_url' => 'https://via.placeholder.com/150/e74c3c/fff.png?text=Mesaki'],
+        ['name' => 'Gestor Gym', 'slug' => 'gestorgym', 'url' => 'https://gestorgym.com.br/admin_master/sso_login.php', 'logo_url' => 'https://via.placeholder.com/150/f39c12/fff.png?text=Gym'],
+        ['name' => 'CacheZum', 'slug' => 'giromax', 'url' => 'https://admin.cachezum.com.br/sso.php', 'logo_url' => 'https://via.placeholder.com/150/8e44ad/fff.png?text=CacheZum'],
+        ['name' => 'Gestor Vital', 'slug' => 'gestor_vital_new', 'url' => 'https://gestorvital.com.br/public/sso_login.php', 'logo_url' => 'https://via.placeholder.com/150/16a085/fff.png?text=Vital'],
+        ['name' => 'Vepix', 'slug' => 'projeto_loja', 'url' => 'https://vepix.com.br/api/sso', 'logo_url' => 'https://via.placeholder.com/150/2980b9/fff.png?text=Vepix']
     ];
 
     $stmt = $db->prepare("INSERT INTO saas_systems (name, slug, url, api_key, secret_key, logo_url) VALUES (:name, :slug, :url, :api_key, :secret_key, :logo_url)");
