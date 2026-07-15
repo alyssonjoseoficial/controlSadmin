@@ -40,7 +40,7 @@ if($system_id > 0) {
             'user_name' => $user_name,
             'system_id' => $system_id,
             'iat' => time(),
-            'exp' => time() + 30 
+            'exp' => time() + 120 
         ]);
         
         $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
