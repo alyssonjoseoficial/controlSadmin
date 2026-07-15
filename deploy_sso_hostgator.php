@@ -16,15 +16,15 @@ $systems = [
     ],
     'EducaSaaS' => [
         'source' => $ssoFilesDir . '/EducaSaaS/sso_login.php',
-        'destination' => $baseHostgatorDir . '/educasaas.com.br/sso_login.php'
+        'destination' => $baseHostgatorDir . '/educasaas.com.br/public/superadmin/sso_login.php'
     ],
     'GestorGym' => [
         'source' => $ssoFilesDir . '/GestorGym/sso_login.php',
-        'destination' => $baseHostgatorDir . '/gestorgym.com.br/sso_login.php'
+        'destination' => $baseHostgatorDir . '/gestorgym.com.br/admin_master/sso_login.php'
     ],
     'GestorVital' => [
         'source' => $ssoFilesDir . '/GestorVital/sso_login.php',
-        'destination' => $baseHostgatorDir . '/gestorvital.com.br/sso_login.php'
+        'destination' => $baseHostgatorDir . '/gestorvital.com.br/public/sso_login.php'
     ],
     'Mesaki' => [
         'source' => $ssoFilesDir . '/Mesaki/sso_login.php',

@@ -1,45 +1,57 @@
 <?php
-/**
- * Arquivo de Login SSO para o sistema: EducaSaaS
- * Faça o upload deste exato arquivo (sso_login.php) para a RAIZ (public_html) do seu sistema na HostGator.
- */
-$secret_key = "educasaas_secret_key_2026!@#"; 
+session_start();
+require_once "../../config/db.php";
 
-if (isset($_GET["token"])) {
-    $jwt = $_GET["token"];
-    $tokenParts = explode(".", $jwt);
+// A chave secreta exata do Educa SaaS no banco Control_SADMIN
+$secret_key = '8881ce3e1b9042690f1811a09a09f7cc9c826553c55eb739dceb672a8e14d935';
+
+if (!isset($_GET['token'])) {
+    die("Acesso Negado: Token não fornecido.");
+}
+
+$jwt = $_GET['token'];
+$tokenParts = explode('.', $jwt);
+
+if (count($tokenParts) != 3) {
+    die("Acesso Negado: Token inválido.");
+}
+
+$header = base64_decode($tokenParts[0]);
+$payload = base64_decode($tokenParts[1]);
+$signature_provided = $tokenParts[2];
+
+// Recriar a assinatura para verificar
+$base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
+$base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
+
+$signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $secret_key, true);
+$base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
+
+if ($base64UrlSignature !== $signature_provided) {
+    die("Acesso Negado: Assinatura do Token inválida.");
+}
+
+$payloadData = json_decode($payload, true);
+
+if ($payloadData['exp'] < time()) {
+    die("Acesso Negado: Token expirado.");
+}
+
+// Token Válido! Buscar o SuperAdmin do Educa SaaS no banco
+$sql = "SELECT id, nome FROM usuarios WHERE nivel_acesso = 'superadmin' LIMIT 1";
+$resultado = $conn->query($sql);
+
+if ($resultado && $resultado->num_rows > 0) {
+    $admin = $resultado->fetch_assoc();
     
-    if(count($tokenParts) == 3) {
-        $header = base64_decode($tokenParts[0]);
-        $payload = base64_decode($tokenParts[1]);
-        $signature_provided = $tokenParts[2];
-        
-        $base64UrlHeader = str_replace(["+", "/", "="], ["-", "_", ""], base64_encode($header));
-        $base64UrlPayload = str_replace(["+", "/", "="], ["-", "_", ""], base64_encode($payload));
-        $signature = hash_hmac("sha256", $base64UrlHeader . "." . $base64UrlPayload, $secret_key, true);
-        $base64UrlSignature = str_replace(["+", "/", "="], ["-", "_", ""], base64_encode($signature));
-        
-        if ($base64UrlSignature === $signature_provided) {
-            $data = json_decode($payload);
-            if(time() <= $data->exp) {
-                session_start();
-                $_SESSION["admin_logged_in"] = true;
-                $_SESSION["admin_id"] = $data->user_id;
-                
-                echo "<h1>Autenticado com Sucesso no EducaSaaS!</h1>";
-                echo "<p>Você está logado através do Hub Central.</p>";
-                echo "<p><em>*Atenção programador: Altere este arquivo para redirecionar para o painel de admin real do EducaSaaS (ex: header(\"Location: /admin\"))</em></p>";
-                exit();
-            } else {
-                die("Erro SSO: Token expirado.");
-            }
-        } else {
-            die("Erro SSO: Assinatura invalida. A chave secreta nao bate com a do Hub.");
-        }
-    } else {
-        die("Erro SSO: Token malformado.");
-    }
+    $_SESSION['usuario_id'] = $admin['id'];
+    $_SESSION['usuario_nome'] = $admin['nome'];
+    $_SESSION['nivel_acesso'] = 'superadmin';
+    
+    // Redireciona para o painel do superadmin
+    header("Location: index.php");
+    exit;
 } else {
-    die("Erro SSO: Acesso negado. Token ausente.");
+    die("Nenhum SuperAdmin encontrado no Educa SaaS.");
 }
 ?>
