@@ -167,6 +167,67 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 800); 
         }
     }
+
+    // Navigation Logic
+    const navDashboard = document.getElementById('nav-dashboard');
+    const navAccess = document.getElementById('nav-access');
+    const viewDashboard = document.getElementById('view-dashboard');
+    const viewAccess = document.getElementById('view-access');
+
+    if (navDashboard && navAccess) {
+        navDashboard.addEventListener('click', (e) => {
+            e.preventDefault();
+            navDashboard.parentElement.classList.add('active');
+            navAccess.parentElement.classList.remove('active');
+            viewDashboard.style.display = 'block';
+            viewAccess.style.display = 'none';
+        });
+
+        navAccess.addEventListener('click', (e) => {
+            e.preventDefault();
+            navAccess.parentElement.classList.add('active');
+            navDashboard.parentElement.classList.remove('active');
+            viewDashboard.style.display = 'none';
+            viewAccess.style.display = 'block';
+            loadAccessData();
+        });
+    }
+
+    async function loadAccessData() {
+        try {
+            const response = await fetch('api/access/get_data.php');
+            const data = await response.json();
+            if (data.success) {
+                // Populate Users
+                const usersTable = document.querySelector('#users-table tbody');
+                usersTable.innerHTML = data.users.length ? data.users.map(u => `
+                    <tr>
+                        <td>${u.id}</td>
+                        <td>${u.name}</td>
+                        <td>${u.email}</td>
+                        <td>${u.created_at}</td>
+                        <td><button class="action-btn" onclick="alert('Editar Admin ID ${u.id}')">Editar</button></td>
+                    </tr>
+                `).join('') : '<tr><td colspan="5" style="text-align:center;">Nenhum usuário encontrado.</td></tr>';
+
+                // Populate SaaS
+                const saasTable = document.querySelector('#saas-table tbody');
+                saasTable.innerHTML = data.systems.length ? data.systems.map(s => `
+                    <tr>
+                        <td>${s.id}</td>
+                        <td>${s.name}</td>
+                        <td>${s.slug}</td>
+                        <td style="font-family: monospace;">${s.api_key}</td>
+                        <td><button class="action-btn" onclick="alert('Chave Secreta: ${s.secret_key}')">Ver Secret</button></td>
+                    </tr>
+                `).join('') : '<tr><td colspan="5" style="text-align:center;">Nenhum sistema encontrado.</td></tr>';
+            }
+        } catch (error) {
+            console.error('Erro ao carregar dados de acesso:', error);
+            document.querySelector('#users-table tbody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Erro ao carregar dados.</td></tr>';
+            document.querySelector('#saas-table tbody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Erro ao carregar dados.</td></tr>';
+        }
+    }
 });
 
 // Add Keyframe dynamically

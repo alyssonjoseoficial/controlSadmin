@@ -41,28 +41,87 @@
                 </div>
             </div>
             <ul class="nav-links">
-                <li class="active"><a href="#">Dashboard Central</a></li>
-                <li><a href="#">Gerenciar Acessos</a></li>
+                <li class="active"><a href="#" id="nav-dashboard">Dashboard Central</a></li>
+                <li><a href="#" id="nav-access">Gerenciar Acessos</a></li>
                 <li><a href="#">Logs de Segurança</a></li>
                 <li><a href="#">Configurações</a></li>
             </ul>
         </nav>
         
         <main class="main-content">
-            <header class="topbar">
-                <div class="overview">
-                    <h1>Visão Geral dos Sistemas SaaS</h1>
-                    <p>Monitore e acesse todos os seus painéis de administração em um só lugar.</p>
+            <div id="view-dashboard" class="view active">
+                <header class="topbar">
+                    <div class="overview">
+                        <h1>Visão Geral dos Sistemas SaaS</h1>
+                        <p>Monitore e acesse todos os seus painéis de administração em um só lugar.</p>
+                    </div>
+                    <div class="global-stats">
+                        <div class="stat-pill">
+                            <span class="pulse-dot green"></span> Sistemas Online: <span id="online-count">0</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="cards-grid" id="systems-grid">
+                    <!-- Cards serão injetados via JS -->
                 </div>
-                <div class="global-stats">
-                    <div class="stat-pill">
-                        <span class="pulse-dot green"></span> Sistemas Online: <span id="online-count">0</span>
+            </div>
+
+            <div id="view-access" class="view" style="display: none;">
+                <header class="topbar">
+                    <div class="overview">
+                        <h1>Gerenciar Acessos</h1>
+                        <p>Administre os usuários do Hub e as chaves de integração dos sistemas SaaS.</p>
+                    </div>
+                </header>
+
+                <div class="access-sections">
+                    <div class="glass-panel" style="margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h2 style="margin:0;">Administradores do Hub</h2>
+                            <button class="glow-button" style="padding: 8px 16px; font-size: 0.9rem;" onclick="alert('Funcionalidade em desenvolvimento')">+ Novo Admin</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="access-table" id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Criado em</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="5" style="text-align:center;">Carregando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h2 style="margin:0;">Sistemas Integrados (SSO)</h2>
+                            <button class="glow-button" style="padding: 8px 16px; font-size: 0.9rem;" onclick="alert('Funcionalidade em desenvolvimento')">+ Novo Sistema</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="access-table" id="saas-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Slug</th>
+                                        <th>API Key</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="5" style="text-align:center;">Carregando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </header>
-
-            <div class="cards-grid" id="systems-grid">
-                <!-- Cards serão injetados via JS -->
             </div>
         </main>
     </div>

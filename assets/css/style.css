@@ -480,3 +480,50 @@ body {
 }
 
 @keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Access Tables */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.access-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.access-table th, .access-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.access-table th {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.access-table tbody tr {
+    transition: background 0.3s;
+}
+
+.access-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.action-btn {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--text-main);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.action-btn:hover {
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary-glow);
+}
